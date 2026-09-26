@@ -43,4 +43,6 @@ try {
 }
 }
 
-export default calculateBmi
+export {
+   calculateBmi
+}

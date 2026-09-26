@@ -1,5 +1,5 @@
 import express from "express";
-import calculateBmi from "./bmiCalculator.ts";
+import {calculateBmi} from "./bmiCalculator.ts";
 
 const app = express();
 
