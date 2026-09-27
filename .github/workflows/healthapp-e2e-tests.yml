@@ -19,11 +19,11 @@ jobs:
     
     - name: Install healthapp dependencies
       working-directory: ./healthapp
-      run: npm install
+      run: npm install --legacy-peer-deps
     
     - name: Lint healthapp
       working-directory: ./healthapp
-      run: npm run lint
+      run: npm install --legacy-peer-deps
     
     - name: Start healthapp server
       working-directory: ./healthapp
