@@ -14,7 +14,7 @@ app.get('/api/ping',(_req,res)=>{
 
 
 app.use('/api/diagnoses', diagnosesRoutes);
-app.use(' /api/patients',patientsRoutes);
+app.use('/api/patients',patientsRoutes);
 
 const PORT=3001;
 app.listen(PORT, ()=>{
