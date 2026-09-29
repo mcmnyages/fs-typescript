@@ -1,0 +1,14 @@
+### GET ####
+GET http://localhost:3001/api/patients
+
+### POST ####
+POST http://localhost:3001/api/patients
+Content-Type: application/json
+
+{
+  "name": "Amina Kamau",
+  "dateOfBirth": "1992-07-14",
+  "ssn": "483-27-9156",
+  "gender": "female",
+  "occupation": "Software Developer"
+}
