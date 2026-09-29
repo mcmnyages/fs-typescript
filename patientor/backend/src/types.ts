@@ -1,17 +1,26 @@
 export interface DiagnosesTypes {
-    code:String,
-    name:String,
-    latin?:String
+    code:string,
+    name:string,
+    latin?:string
 }
 
-// type Gender = 'Male'| 'Female' |'Other'
+export const Gender = {
+    Male: 'male',
+    Female: 'female',
+    Other: 'other'
+} as const
+
+export type Gender = typeof Gender[keyof typeof Gender]
+
 
 export interface PatientTypes{
-    id:String
-    name:String
-    dateOfBirth:String
-    ssn:String
-    gender:String
-    occupation:String
+    id:string
+    name:string
+    dateOfBirth:string
+    ssn:string
+    gender:Gender
+    occupation:string
 }
 export type NonSensitivePatient = Omit<PatientTypes, "ssn">;
+
+export type NewPatient = Omit<PatientTypes, 'id'>
