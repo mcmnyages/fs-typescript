@@ -12,6 +12,7 @@ export type Visibility =
   | 'poor';
 
 export interface DiaryEntry {
+  id:number;
   date: string;
   weather: Weather;
   visibility: Visibility;
