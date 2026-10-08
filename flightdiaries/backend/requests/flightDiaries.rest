@@ -1,0 +1,13 @@
+### GET DIARIES ###
+ GET http://localhost:3000/api/diaries
+
+### CREATE NEW DIARIES ###
+ POST http://localhost:3000/api/diaries
+ Content-Type: application/application/json
+
+ {
+    "date":"2017-01-05",
+    "weather":"very bad",
+    "visibility":"badly",
+    "comment":"bad"
+ }
