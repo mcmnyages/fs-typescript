@@ -6,7 +6,6 @@ interface Props {
 }
 
 const DiaryList = ({ diaries }: Props) => {
-  console.log('Diaries',diaries)
   return (
     <section>
       {diaries.map(diary => (

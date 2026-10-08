@@ -14,6 +14,23 @@ interface Props {
   setNotification: (message: string) => void;
 }
 
+
+
+const weatherOptions: Weather[] = [
+  'sunny',
+  'rainy',
+  'cloudy',
+  'stormy',
+  'windy',
+];
+
+const visibilityOptions: Visibility[] = [
+  'great',
+  'good',
+  'ok',
+  'poor',
+];
+
 const DiaryForm = ({ onCreated, setNotification }: Props) => {
   const [date, setDate] = useState('');
   const [weather, setWeather] = useState<Weather>('sunny');
@@ -42,7 +59,7 @@ const DiaryForm = ({ onCreated, setNotification }: Props) => {
       setComment('');
     } catch (error: unknown) {
       if (axios.isAxiosError<ErrorResponse>(error)) {
-        const message = error.response?.data.error.message;
+        const message = error.response?.data.error[0]?.message;
 
         setNotification(message ?? error.message);
       } else {
@@ -63,36 +80,39 @@ const DiaryForm = ({ onCreated, setNotification }: Props) => {
         />
       </div>
 
-      <div>
-        <label htmlFor="weather">Weather</label>
-        <select
-          id="weather"
-          value={weather}
-          onChange={({ target }) => setWeather(target.value as Weather)}
-        >
-          <option value="sunny">Sunny</option>
-          <option value="rainy">Rainy</option>
-          <option value="cloudy">Cloudy</option>
-          <option value="stormy">Stormy</option>
-          <option value="windy">Windy</option>
-        </select>
-      </div>
+      <fieldset>
+        <legend>Weather</legend>
 
-      <div>
-        <label htmlFor="visibility">Visibility</label>
-        <select
-          id="visibility"
-          value={visibility}
-          onChange={({ target }) =>
-            setVisibility(target.value as Visibility)
-          }
-        >
-          <option value="great">Great</option>
-          <option value="good">Good</option>
-          <option value="ok">Okay</option>
-          <option value="poor">Poor</option>
-        </select>
-      </div>
+        {weatherOptions.map(option => (
+          <label key={option}>
+            <input
+              type="radio"
+              name="weather"
+              value={option}
+              checked={weather === option}
+              onChange={() => setWeather(option)}
+            />
+            {option}
+          </label>
+        ))}
+      </fieldset>
+
+      <fieldset>
+        <legend>Visibility</legend>
+
+        {visibilityOptions.map(option => (
+          <label key={option}>
+            <input
+              type="radio"
+              name="visibility"
+              value={option}
+              checked={visibility === option}
+              onChange={() => setVisibility(option)}
+            />
+            {option}
+          </label>
+        ))}
+      </fieldset>
 
       <div>
         <label htmlFor="comment">Comment</label>
