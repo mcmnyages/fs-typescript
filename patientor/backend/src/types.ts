@@ -82,3 +82,45 @@ export type Entry =
     | OccupationalHealthcareEntry
     | HealthCheckEntry;
 
+
+
+export type UnionOmit<T, K extends keyof T> =
+    T extends unknown ? Omit<T, K> : never;
+
+const BaseEntrySchema = z.object({
+    description: z.string(),
+    date: z.iso.date(),
+    specialist: z.string(),
+    diagnosisCodes: z.array(z.string()).optional(),
+});
+
+export const NewEntrySchema = z.discriminatedUnion('type', [
+    BaseEntrySchema.extend({
+        type: z.literal('Hospital'),
+        discharge: z.object({
+            date: z.iso.date(),
+            criteria: z.string(),
+        }),
+    }),
+
+    BaseEntrySchema.extend({
+        type: z.literal('OccupationalHealthcare'),
+        employerName: z.string(),
+        sickLeave: z.object({
+            startDate: z.iso.date(),
+            endDate: z.iso.date(),
+        }).optional(),
+    }),
+
+    BaseEntrySchema.extend({
+        type: z.literal('HealthCheck'),
+        healthCheckRating: z.union([
+            z.literal(HealthCheckRating.Healthy),
+            z.literal(HealthCheckRating.LowRisk),
+            z.literal(HealthCheckRating.HighRisk),
+            z.literal(HealthCheckRating.CriticalRisk),
+        ]),
+    }),
+]);
+
+export type NewEntry = z.infer<typeof NewEntrySchema>;
