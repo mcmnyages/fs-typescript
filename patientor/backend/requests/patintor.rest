@@ -16,3 +16,6 @@ Content-Type: application/json
   "gender": "female",
   "occupation": "Software Developer"
 }
+
+### GET DIAGNOSIS ###
+GET http://localhost:3001/api/diagnoses
