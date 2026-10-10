@@ -19,3 +19,41 @@ Content-Type: application/json
 
 ### GET DIAGNOSIS ###
 GET http://localhost:3001/api/diagnoses
+
+### POST ###
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "description": "Thumb injury follow-up",
+  "date": "2026-10-10",
+  "specialist": "MD House",
+  "type": "Hospital",
+  "diagnosisCodes": ["S62.5"],
+  "discharge": {
+    "date": "2026-10-11",
+    "criteria": "Thumb has healed."
+  }
+}
+
+
+
+# {
+#   "description": "Workplace health assessment",
+#   "date": "2026-10-10",
+#   "specialist": "MD House",
+#   "type": "OccupationalHealthcare",
+#   "employerName": "HyPD",
+#   "sickLeave": {
+#     "startDate": "2026-10-10",
+#     "endDate": "2026-10-12"
+#   }
+# }
+
+# {
+#   "description": "Routine health check",
+#   "date": "2026-10-10",
+#   "specialist": "MD House",
+#   "type": "HealthCheck",
+#   "healthCheckRating": 0
+# }
