@@ -1,4 +1,4 @@
-import type { Diagnosis, Entry } from '../types';
+import type { Diagnosis, Entry } from '../../types';
 import EntryDetails from './EntryDetails';
 import { Card, CardContent, Typography, Box, Chip, Divider } from '@mui/material';
 

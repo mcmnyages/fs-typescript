@@ -2,18 +2,21 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import patientService from '../../services/patients';
 import diagnosisService from '../../services/diagnosisService';
-import type { Patient, Diagnosis } from '../../types';
-import Entries from '../Entries';
-import { Container, Typography, Box, Paper, CircularProgress, Alert, Avatar, Divider, Grid } from '@mui/material';
+import type { Patient, Diagnosis, Entry } from '../../types';
+import Entries from '../../components/Entry/Entries';
+import AddEntryForm from '../../components/Entry/AddEntryForm'; // Adjust import path if needed
+import { Container, Typography, Box, Paper, CircularProgress, Alert, Avatar, Divider, Grid, Button } from '@mui/material';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import TransgenderIcon from '@mui/icons-material/Transgender';
+import AddIcon from '@mui/icons-material/Add';
 
 const PatientPage = () => {
     const { id } = useParams<{ id: string }>();
     const [patient, setPatient] = useState<Patient | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
         if (!id) return;
@@ -29,6 +32,15 @@ const PatientPage = () => {
             .then(setPatient)
             .catch(() => setError('Failed to fetch patient information'));
     }, [id]);
+
+    const handleEntryAdded = (newEntry: Entry) => {
+        if (!patient) return;
+        setPatient({
+            ...patient,
+            entries: patient.entries.concat(newEntry)
+        });
+        setShowForm(false);
+    };
 
     if (error) {
         return (
@@ -48,19 +60,16 @@ const PatientPage = () => {
 
     const getGenderIcon = (gender: string) => {
         switch (gender.toLowerCase()) {
-            case 'male':
-                return <MaleIcon color="primary" />;
-            case 'female':
-                return <FemaleIcon color="secondary" />;
-            default:
-                return <TransgenderIcon />;
+            case 'male': return <MaleIcon color="primary" />;
+            case 'female': return <FemaleIcon color="secondary" />;
+            default: return <TransgenderIcon />;
         }
     };
 
     return (
         <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
             <Paper elevation={2} sx={{ p: 4, borderRadius: 3 }}>
-                {/* Header section with Avatar and Name */}
+                {/* Header section */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                     <Avatar sx={{ width: 64, height: 64, bgcolor: 'primary.main', fontSize: '1.75rem', fontWeight: 'bold' }}>
                         {patient.name.charAt(0)}
@@ -80,7 +89,7 @@ const PatientPage = () => {
 
                 <Divider sx={{ my: 2 }} />
 
-                {/* Patient Details Grid */}
+                {/* Details Grid */}
                 <Grid container spacing={3} sx={{ mb: 3 }}>
                     <Grid size={{ xs: 12, sm: 6 }}>
                         <Typography variant="body2" color="text.secondary">Occupation</Typography>
@@ -93,6 +102,24 @@ const PatientPage = () => {
                 </Grid>
 
                 <Divider sx={{ my: 3 }} />
+
+                {/* Form Toggle Button & Conditional Form Rendering */}
+                {!showForm ? (
+                    <Button 
+                        variant="contained" 
+                        startIcon={<AddIcon />} 
+                        onClick={() => setShowForm(true)}
+                        sx={{ mb: 3 }}
+                    >
+                        Add New Entry
+                    </Button>
+                ) : (
+                    <AddEntryForm 
+                        patientId={patient.id} 
+                        onEntryAdded={handleEntryAdded} 
+                        onCancel={() => setShowForm(false)} 
+                    />
+                )}
 
                 <Entries entries={patient.entries} diagnoses={diagnoses} />
             </Paper>

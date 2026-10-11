@@ -1,4 +1,4 @@
-import type { Entry } from '../types';
+import type { Entry } from '../../types';
 import { Box, Typography, Chip } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import WorkIcon from '@mui/icons-material/Work';
