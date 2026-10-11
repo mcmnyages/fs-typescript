@@ -71,6 +71,8 @@ test.describe('Adding an entry to a patient', () => {
 
     await page.getByRole('button', { name: 'Add' }).click();
 
-    await expect(page.getByText('Annual checkup, all clear')).toBeVisible();
+    await expect(
+      page.getByText('Annual checkup, all clear', { exact: true }).last()
+    ).toBeVisible();
   });
-});
+})
