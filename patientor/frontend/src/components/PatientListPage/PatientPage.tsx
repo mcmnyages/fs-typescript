@@ -105,19 +105,20 @@ const PatientPage = () => {
 
                 {/* Form Toggle Button & Conditional Form Rendering */}
                 {!showForm ? (
-                    <Button 
-                        variant="contained" 
-                        startIcon={<AddIcon />} 
+                    <Button
+                        variant="contained"
+                        startIcon={<AddIcon />}
                         onClick={() => setShowForm(true)}
                         sx={{ mb: 3 }}
                     >
                         Add New Entry
                     </Button>
                 ) : (
-                    <AddEntryForm 
-                        patientId={patient.id} 
-                        onEntryAdded={handleEntryAdded} 
-                        onCancel={() => setShowForm(false)} 
+                    <AddEntryForm
+                        diagnoses={diagnoses}
+                        patientId={patient.id}
+                        onEntryAdded={handleEntryAdded}
+                        onCancel={() => setShowForm(false)}
                     />
                 )}
 
